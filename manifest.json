@@ -1,0 +1,85 @@
+{
+  "id": "aruba_airwave",
+  "name": "Aruba AirWave",
+  "name_en": "HPE Aruba AirWave",
+  "version": "1.0.0",
+  "description": "Monitoreo de infraestructura Aruba con AirWave (API XML): consultar dispositivos y su estado, métricas generales y clientes conectados. Solo lectura",
+  "description_en": "Read-only monitoring of Aruba infrastructure with AirWave (XML API): query devices and their status, overall metrics and connected clients",
+  "icon": "icon.svg",
+  "category": "networking",
+  "category_en": "networking",
+  "keywords": [
+    "aruba",
+    "airwave",
+    "access point",
+    "ap",
+    "wifi",
+    "dispositivos",
+    "clientes",
+    "monitoreo",
+    "monitoring",
+    "networking"
+  ],
+  "library": {
+    "package": "ruvic-aruba-airwave-connector",
+    "install": "pip install git+https://github.com/RuvicDev/CON-092-Aruba-AirWave.git#subdirectory=lib",
+    "import_name": "ruvic_aruba_airwave_connector"
+  },
+  "auth_modes": [
+    {
+      "id": "user_password",
+      "label": "Usuario y contraseña",
+      "fields": [
+        {
+          "key": "base_url",
+          "label": "URL de AirWave",
+          "type": "text",
+          "required": true,
+          "placeholder": "https://airwave.miempresa.com",
+          "help_text": "Sin barra final"
+        },
+        {
+          "key": "username",
+          "label": "Usuario",
+          "type": "text",
+          "required": true,
+          "placeholder": "ruvic-api"
+        },
+        {
+          "key": "password",
+          "label": "Contraseña",
+          "type": "password",
+          "secret": true,
+          "required": true
+        },
+        {
+          "key": "verify_ssl",
+          "label": "Verificar certificado SSL",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "help_text": "Desactívalo solo si el equipo usa un certificado autofirmado en una red de confianza"
+        },
+        {
+          "key": "connect_timeout",
+          "label": "Timeout de conexión (segundos)",
+          "type": "number",
+          "required": false,
+          "default": "30"
+        }
+      ]
+    }
+  ],
+  "env_prefix": "RUVIC_ARUBA_AIRWAVE_",
+  "operations": [
+    "devices.list",
+    "device.status",
+    "metrics.get",
+    "clients.get"
+  ],
+  "test_connection": true,
+  "docs": {
+    "skill": "SKILL.md",
+    "permissions_note": "Crea en AirWave un usuario con un rol de solo lectura ('Monitor Only') limitado a las carpetas que el agente pueda consultar. El conector solo lee (ap_list.xml, ap_detail.xml, amp_stats.xml, client_detail.xml) y no cambia configuraciones."
+  }
+}
